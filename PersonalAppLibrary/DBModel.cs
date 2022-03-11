@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.IO;
+﻿using System.IO;
 using System.Diagnostics;
 
 namespace PersonalAppLibrary
 {
-    class JSONModel
+    class DBModel
     {
         private static string path = Directory.GetCurrentDirectory().ToString() + @"\Categories";
         public static void LaunchFile(int fileIndex, string category)
@@ -22,7 +16,7 @@ namespace PersonalAppLibrary
             string[] files = File.ReadAllLines(path + @"\" + category + ".bar");
             string[] CuttedPath = files[fileIndex].Split('\\');
             string catalog = "";
-            for(int i = 0; i < CuttedPath.Length - 1; i++)
+            for (int i = 0; i < CuttedPath.Length - 1; i++)
             {
                 catalog += CuttedPath[i] + "\\";
             }
@@ -71,7 +65,7 @@ namespace PersonalAppLibrary
         {
             if (File.Exists(path + @"\" + category + ".bar"))
             {
-                if(File.ReadAllLines(path + @"\" + category + ".bar").Length != 1)
+                if (File.ReadAllLines(path + @"\" + category + ".bar").Length != 1)
                 {
                     string[] files = File.ReadAllLines(path + @"\" + category + ".bar");
                     bool firstInput = true;
@@ -97,7 +91,7 @@ namespace PersonalAppLibrary
                 }
             }
         }
-        
+
         public static string[] GetCategoryFiles(string category)
         {
 
@@ -114,6 +108,14 @@ namespace PersonalAppLibrary
                 return files;
             }
             else return null;
+        }
+
+        public static void RemoveCategory(string category)
+        {
+            if (File.Exists(path + @"\" + category + ".bar"))
+            {
+                File.Delete(path + @"\" + category + ".bar");
+            }
         }
     }
 }

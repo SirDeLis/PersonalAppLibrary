@@ -5,66 +5,99 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PersonalAppLibrary"
         mc:Ignorable="d"
-        Title="Personal App Library" Height="450" Width="800" Loaded="Window_Loaded">
-    <Window.DataContext>
-
-        <local:JSONprop/>
-
-    </Window.DataContext>
+        Title="Personal App Library" Height="450" Width="800" Loaded="Window_Loaded" Background="#502F4C">
+    <Window.Resources>
+        <Style x:Key="DataGridStyle" TargetType="DataGrid">
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle1}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FontFamily" Value="{DynamicResource BebasFont}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="#000000"/>
+        </Style>
+        <Style x:Key="ColumnHeaderStyle1" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#6B7FD7"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#E8E9F3"/>
+            <Setter Property="FontFamily" Value="{DynamicResource BebasFont}"/>
+            <Setter Property="FontSize" Value="50px"/>
+            <Setter Property="Height" Value="80px"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#6B7FD7"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="#000000"/>
+            <Setter Property="Foreground" Value="#E8E9F3"/>
+            <Setter Property="FontFamily" Value="{DynamicResource BebasFont}"/>
+            <Setter Property="FontSize" Value="20px"/>
+        </Style>
+        <FontFamily x:Key="BebasFont">/Resources/Fonts/#Bebas Neue</FontFamily>
+        
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="9*"/>
             <RowDefinition Height="40px"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="Categories" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" SelectionChanged="Categories_SelectionChanged">
+        <DataGrid Style="{DynamicResource DataGridStyle}" x:Name="Categories" Grid.Row="0" 
+                  Grid.Column="0" Grid.ColumnSpan="3" AutoGenerateColumns="False" SelectionMode="Single" 
+                  IsReadOnly="True" SelectionChanged="Categories_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="1*" Header="Category" Binding="{Binding}"/>
             </DataGrid.Columns>
+            <DataGrid.RowHeaderStyle>
+                <Style TargetType="DataGridRowHeader">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+            </DataGrid.RowHeaderStyle>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
-        <Button Grid.Row="1" Grid.Column="0" Click="AddCategory_Click">Add Category</Button>
-        <Button Grid.Row="1" Grid.Column="1" Click="RefreshCategories_Click">
-            <Image Source="Resources/refresh.png"></Image></Button>
-        <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40px"/>
-                <RowDefinition Height="8*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Grid.Column="0" Click="AddFile_Click">Add File</Button>
-            <Button Grid.Row="0" Grid.Column="1" Click="RemoveFromList_Click">Remove File</Button>
-            <Button Grid.Row="0" Grid.Column="2" Click="UpdateFilesTable_Click">
-                <Image Source="Resources\refresh.png"></Image>
-            </Button>
-            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="8*"/>
-                    <RowDefinition Height="40px"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <DataGrid x:Name="FilesList" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
-                    <DataGrid.Resources>
-                        <Style TargetType="{x:Type DataGridCell}">
-                            <EventSetter Event="MouseDoubleClick" Handler="FileCell_MouseDoubleClick"></EventSetter>
-                        </Style>
-                    </DataGrid.Resources>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Width="1*" Header="File path" Binding="{Binding}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Click="GetToDirectory_Click">To Directory</Button>
-            </Grid>
-        </Grid>
+        <Button Style="{DynamicResource ButtonStyle}" Grid.Row="1" Grid.Column="0" Click="AddCategory_Click">Add Category</Button>
+        <Button Style="{DynamicResource ButtonStyle}" Grid.Row="1" Grid.Column="1" Click="RemoveCategory_Click">Remove Category</Button>
+        <Button Style="{DynamicResource ButtonStyle}" Grid.Row="1" Grid.Column="2" Click="RefreshCategories_Click">
+            <Image Source="Resources/refresh.png"></Image>
+        </Button>
+        <Button Style="{DynamicResource ButtonStyle}" Grid.Row="1" Grid.Column="3" Click="AddFile_Click">Add File</Button>
+        <Button Style="{DynamicResource ButtonStyle}" Grid.Row="1" Grid.Column="4" Click="RemoveFromList_Click">Remove File</Button>
+        
+        <Button Style="{DynamicResource ButtonStyle}" Grid.Row="1" Grid.Column="5" Click="GetToDirectory_Click">To Directory</Button>
+        <Button Style="{DynamicResource ButtonStyle}" Grid.Row="1" Grid.Column="6" Click="UpdateFilesTable_Click">
+            <Image Source="Resources\refresh.png"></Image>
+        </Button>
+        <DataGrid Style="{DynamicResource DataGridStyle}" x:Name="FilesList" Grid.Row="0" 
+                  Grid.Column="3" Grid.ColumnSpan="4" AutoGenerateColumns="False" SelectionMode="Single" 
+                  IsReadOnly="True" Background="Transparent">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <EventSetter Event="MouseDoubleClick" Handler="FileCell_MouseDoubleClick"></EventSetter>
+                    </Style>
+                <Style TargetType="DataGridRowHeader">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="1*" Header="File path" Binding="{Binding}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </Window>
